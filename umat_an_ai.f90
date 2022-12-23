@@ -37,25 +37,17 @@ PARAMETER (DIR2='prefdir.inp')
 
 END module global
 
-! module state_constant
-!   use,intrinsic :: iso_c_binding
-!   implicit none
-!   real(c_float), bind(c) :: aaa,bbb
-
-!   interface
-!       function addf(aaa,bbb) bind ( C, name = "addf" )
-!         use iso_c_binding
-!         implicit none
-!         real(c_float) :: addf
-!         real(c_float), value :: aaa,bbb
-!       end function addf
-!   end interface
-
-! end module state_constant
-subroutine addfunction(a,b) bind(C, name='addf')
+module mymod
+use, intrinsic :: iso_c_binding
+interface
+subroutine addfortran(x,y,sum) bind(C, name='addf')
     use, intrinsic :: iso_c_binding
-    real(c_float) :: a,b
-end subroutine
+    real(c_float) :: x, y
+    real(c_float) :: sum
+end subroutine addfortran
+end interface
+end module mymod
+
 !>********************************************************************
 !> Record of revisions:                                              |
 !>        Date        Programmer        Description of change        |
@@ -75,6 +67,7 @@ SUBROUTINE umat(stress,statev,ddsdde,sse,spd,scd, rpl,ddsddt,drplde,drpldt,  &
     celent,dfgrd0,dfgrd1,noel,npt,layer,kspt,kstep,kinc)
 !
 use global
+use mymod
 IMPLICIT NONE
 
 !     PREFERED DIRETION
@@ -166,6 +159,12 @@ DOUBLE PRECISION :: cjr(ndi,ndi,ndi,ndi)
 DOUBLE PRECISION :: sigma(ndi,ndi),ddsigdde(ndi,ndi,ndi,ndi),  &
     ddpkdde(ndi,ndi,ndi,ndi)
 DOUBLE PRECISION :: stest(ndi,ndi), ctest(ndi,ndi,ndi,ndi)
+!
+real :: aaa,bbb,ccc
+
+call addfortran(aaa,bbb,ccc)
+
+!
 !----------------------------------------------------------------------
 !-------------------------- INITIALIZATIONS ---------------------------
 !----------------------------------------------------------------------
@@ -233,7 +232,6 @@ cjr=zero
 !     TOTAL CAUCHY STRESS AND ELASTICITY TENSORS
 sigma=zero
 ddsigdde=zero
-call addfunction(1.0,2.0)
 !----------------------------------------------------------------------
 !------------------------ IDENTITY TENSORS ----------------------------
 !----------------------------------------------------------------------
