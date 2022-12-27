@@ -40,11 +40,11 @@ END module global
 module mymod
 use, intrinsic :: iso_c_binding
 interface
-subroutine addfortran(x,y,sum) bind(C, name='addf')
+subroutine determinantf(m,d) bind(C, name='determinant')
     use, intrinsic :: iso_c_binding
-    real(c_float) :: x, y
-    real(c_float) :: sum
-end subroutine addfortran
+    real(c_double), dimension(3,3), intent(in) :: m
+    real(c_double), intent(out) :: d 
+end subroutine determinantf
 end interface
 end module mymod
 
@@ -160,10 +160,8 @@ DOUBLE PRECISION :: sigma(ndi,ndi),ddsigdde(ndi,ndi,ndi,ndi),  &
     ddpkdde(ndi,ndi,ndi,ndi)
 DOUBLE PRECISION :: stest(ndi,ndi), ctest(ndi,ndi,ndi,ndi)
 !
-real :: aaa,bbb,ccc
-
-call addfortran(aaa,bbb,ccc)
-
+double precision :: detff
+!     PROPERTIES
 !
 !----------------------------------------------------------------------
 !-------------------------- INITIALIZATIONS ---------------------------
@@ -270,6 +268,9 @@ IF ((time(1) == zero).AND.(kstep == 1)) THEN
 END IF
 !        READ STATEV
 CALL sdvread(statev)
+!
+call determinantf(dfgrd1,detff)
+write(*,'(F8.2)') detff
 !----------------------------------------------------------------------
 !---------------------------- KINEMATICS ------------------------------
 !----------------------------------------------------------------------
