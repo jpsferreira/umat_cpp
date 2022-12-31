@@ -1,23 +1,32 @@
 module mymod
-use, intrinsic :: iso_c_binding
 interface
-subroutine addfortran(x,y,sum) bind(C, name='addf')
+function addfortran(x,y) bind(C, name='addf')
     use, intrinsic :: iso_c_binding
-    real(c_float) :: x, y
-    real(c_float) :: sum
-end subroutine addfortran
+    real(c_float), intent(in), value  :: x, y
+    !real(c_float) :: sum
+end function addfortran
+!
+! subroutine determinantf(m,d) bind(C, name='detc')
+!     use, intrinsic :: iso_c_binding
+!     real(c_double), dimension(3,3), intent(in)  :: m
+!     real(c_float), intent(out) :: d
+! end subroutine determinantf
 end interface
 end module mymod
 
-SUBROUTINE umat(a,b)
+SUBROUTINE umat(f,s,d)
 !
 use mymod
 IMPLICIT NONE
 
-real :: a,b,c
+real, dimension(3,3) :: f
+!real, intent(in out) :: s,d
+real :: s,d, summ
 
-call addfortran(a,b,c)
+summ = addfortran(s,d)
+!call determinantf(f,ff)
 
-print *, c
+write(*,*) s,d,summ,s+d
+!print *, ff
 return
 end subroutine umat

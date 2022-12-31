@@ -40,10 +40,10 @@ END module global
 module mymod
 use, intrinsic :: iso_c_binding
 interface
-subroutine determinantf(m,d) bind(C, name='determinant')
+subroutine determinantf(m,d) bind(C, name='detc')
     use, intrinsic :: iso_c_binding
-    real(c_double), dimension(3,3), intent(in) :: m
-    real(c_double), intent(out) :: d 
+    real(c_double), dimension(3,3), intent(in)  :: m
+    real(c_double), dimension(3,3), intent(out) :: d
 end subroutine determinantf
 end interface
 end module mymod
@@ -160,7 +160,7 @@ DOUBLE PRECISION :: sigma(ndi,ndi),ddsigdde(ndi,ndi,ndi,ndi),  &
     ddpkdde(ndi,ndi,ndi,ndi)
 DOUBLE PRECISION :: stest(ndi,ndi), ctest(ndi,ndi,ndi,ndi)
 !
-double precision :: detff
+double precision :: detff(ndi,ndi)
 !     PROPERTIES
 !
 !----------------------------------------------------------------------
@@ -268,14 +268,15 @@ IF ((time(1) == zero).AND.(kstep == 1)) THEN
 END IF
 !        READ STATEV
 CALL sdvread(statev)
-!
-call determinantf(dfgrd1,detff)
-write(*,'(F8.2)') detff
 !----------------------------------------------------------------------
 !---------------------------- KINEMATICS ------------------------------
 !----------------------------------------------------------------------
 !     DISTORTION GRADIENT
 CALL fslip(dfgrd1,distgr,det,ndi)
+call determinantf(dfgrd1,detff)
+write(*,*) dfgrd1
+write(*,*) ''
+write(*,*) detff
 !     INVERSE OF DISTORTION GRADIENT
 CALL matinv3d(dfgrd1,dfgrd1inv,ndi)
 !     INVERSE OF DISTORTION GRADIENT
