@@ -22,12 +22,12 @@ int main(int argc, const char *argv[]) {
 
   // Create a vector of inputs.
   std::vector<torch::jit::IValue> inputs;
-  inputs.push_back(torch::ones({1, 9}));
+  inputs.push_back(torch::ones({1, 1}));
 
   // Execute the model and turn its output into a tensor.
   at::Tensor output = module.forward(inputs).toTensor();
   std::cout << "stresses\n";
-  std::cout << output.slice(/*dim=*/1, /*start=*/0, /*end=*/5) << '\n';
+  std::cout << output.slice(/*dim=*/1, /*start=*/0, /*end=*/1) << '\n';
 
   std::cout << "sum of stresses\n";
   std::cout << sum(output) << std::endl;
