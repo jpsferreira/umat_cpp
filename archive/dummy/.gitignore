@@ -1,0 +1,12 @@
+**/*.o
+**/*.mod
+.vscode
+*.pdf
+
+# Compiled Object files
+**/.DS_Store
+*.slo
+*.lo
+*.o
+*.obj
+main

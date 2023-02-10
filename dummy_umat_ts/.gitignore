@@ -1,0 +1,8 @@
+**/*.o
+**/*.mod
+.vscode
+*.pdf
+build
+lib
+bin
+call_ts_export.h
