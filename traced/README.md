@@ -3,11 +3,12 @@
 
 ## Requirements
 
-- libtorch
+- libtorch (https://pytorch.org/get-started/locally/)
 - nvidia-cuda-toolkit (nvcc)
 - nvidia-cudnn
 
 ## build executable
+go to build directory and run cmake
 
 ```zsh
 cmake -DCMAKE_PREFIX_PATH=path/to/libtorch ..

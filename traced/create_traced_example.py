@@ -1,5 +1,6 @@
 import torch
 
+
 class MyModel(torch.nn.Module):
     """
     A simple model that takes in a tensor, performs a linear transformation,
@@ -15,7 +16,7 @@ class MyModel(torch.nn.Module):
         out = self.linear(x)
         return out
 
-
+# this model accepts a tensor of size 1, and returns a tensor of size 1
 mdl = MyModel()
 # simulate a ML training process
 example_weight = torch.rand(1, 1)
@@ -29,7 +30,7 @@ print(traced_model)
 # save the model
 traced_model.save("traced_example.pt")
 
-#print input
+# print input
 print(f'input: {example_forward_input}')
 # print weight
 print(f'weight: {mdl.linear.weight}')
