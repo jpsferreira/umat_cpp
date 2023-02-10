@@ -17,6 +17,7 @@ lenoutdir=len_trim(outdir)
 
 RETURN
 END SUBROUTINE getoutdir
+
 module global
 
 
@@ -38,15 +39,15 @@ PARAMETER (DIR2='prefdir.inp')
 END module global
 
 module mymod
-use, intrinsic :: iso_c_binding
-interface
-subroutine determinantf(m,d) bind(C, name='detc')
-    use, intrinsic :: iso_c_binding
-    real(c_double), dimension(3,3), intent(in)  :: m
-    real(c_double), dimension(3,3), intent(out) :: d
-end subroutine determinantf
+use, intrinsic :: iso_c_binding, only: c_float
+interface dl_model
+subroutine dl_model(I, G) bind (c)
+    import :: c_float
+    real(c_float) :: I(1)
+    real(c_float) :: G(1)
+end subroutine
 end interface
-end module mymod
+end module
 
 !>********************************************************************
 !> Record of revisions:                                              |
@@ -160,7 +161,7 @@ DOUBLE PRECISION :: sigma(ndi,ndi),ddsigdde(ndi,ndi,ndi,ndi),  &
     ddpkdde(ndi,ndi,ndi,ndi)
 DOUBLE PRECISION :: stest(ndi,ndi), ctest(ndi,ndi,ndi,ndi)
 !
-double precision :: detff(ndi,ndi)
+real(4) I(1), G(1)
 !     PROPERTIES
 !
 !----------------------------------------------------------------------
@@ -273,10 +274,12 @@ CALL sdvread(statev)
 !----------------------------------------------------------------------
 !     DISTORTION GRADIENT
 CALL fslip(dfgrd1,distgr,det,ndi)
-call determinantf(dfgrd1,detff)
-write(*,*) dfgrd1
+I=1.022
+G=2.011
+call dl_model(I, G)  
+write(*,*) I
 write(*,*) ''
-write(*,*) detff
+write(*,*) G
 !     INVERSE OF DISTORTION GRADIENT
 CALL matinv3d(dfgrd1,dfgrd1inv,ndi)
 !     INVERSE OF DISTORTION GRADIENT
