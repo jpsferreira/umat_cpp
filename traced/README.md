@@ -2,10 +2,13 @@
 
 
 ## Requirements
-
+- cmake (https://cmake.org/install/)
 - libtorch (https://pytorch.org/get-started/locally/)
 - nvidia-cuda-toolkit (nvcc)
 - nvidia-cudnn
+- g++ (https://gcc.gnu.org/install/)
+- gfortran (https://gcc.gnu.org/wiki/GFortranBinaries)
+
 
 ## build executable
 go to build directory and run cmake

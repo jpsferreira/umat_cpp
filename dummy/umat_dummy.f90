@@ -26,7 +26,9 @@ real :: s,d, summ
 summ = addfortran(s,d)
 !call determinantf(f,ff)
 
-write(*,*) s,d,summ,s+d
+write(*,*) "s", s
+write(*,*) "d", d
+write(*,*) "s+d", summ
 !print *, ff
 return
 end subroutine umat
