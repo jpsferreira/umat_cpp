@@ -1,0 +1,1 @@
+rm *.prt *.msg *.par *.pes *.odb *.dat *.com *.pmg
