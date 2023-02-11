@@ -4529,15 +4529,18 @@ INTEGER :: lenjobdir,i,j,k
 !     LOP=0 --> START OF THE ANALYSIS
 IF(lop == 0.OR.lop == 4) THEN
   
-  CALL getoutdir(jobdir,lenjobdir)
+  !CALL getoutdir(jobdir,lenjobdir)
   
   !preferential direction
-  filename=jobdir(:lenjobdir)//'/'//dir2
-  OPEN(16,FILE=filename)
+  !filename=jobdir(:lenjobdir)//'/'//dir2
+  !OPEN(16,FILE=filename)
+  prefdir = 0
   DO i=1,nelem
-    READ(16,*) (prefdir(i,j),j=1,4)
+   ! READ(16,*) (prefdir(i,j),j=1,4)
+    prefdir(i,1) = i
+    prefdir(i,2) = 1.d0
   END DO
-  CLOSE(16)
+  !CLOSE(16)
 END IF
 
 RETURN

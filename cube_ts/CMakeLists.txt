@@ -29,11 +29,11 @@ include_directories(${PROJECT_BINARY_DIR})
 add_library(dl_model SHARED src/dl_model.cpp)
 
 # fortran library
-add_library(umat SHARED src/umat_an_ai.f90)
+add_library(umat OBJECT src/umat_an_ai.f90)
 
 
 # linked against c library
-target_link_libraries(umat dl_model)
+#target_link_libraries(umat dl_model)
 target_link_libraries(dl_model "${TORCH_LIBRARIES}")
 
 # we let cmake generate the export header
@@ -41,7 +41,6 @@ include(GenerateExportHeader)
 generate_export_header(dl_model BASE_NAME call_ts)
 
 install(TARGETS dl_model LIBRARY DESTINATION lib ARCHIVE DESTINATION lib)
-
 install(FILES src/call_ts.h ${PROJECT_BINARY_DIR}/call_ts_export.h DESTINATION include)
 
 #set_property(TARGET umat.o PROPERTY CXX_STANDARD 14)
