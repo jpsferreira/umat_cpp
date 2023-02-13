@@ -1,26 +1,52 @@
 # umat_cpp
 
-
 ## Requirements
 - cmake (https://cmake.org/install/)
 - libtorch (https://pytorch.org/get-started/locally/)
+    * download libtorch and extract to ~/libtorch
+    * linux cpu version
+        ```zsh
+        wget https://download.pytorch.org/libtorch/cpu/libtorch-shared-with-deps-latest.zip
+        unzip libtorch-shared-with-deps-latest.zip
+        mv libtorch ~/libtorch
+        ```
+- g++ (https://gcc.gnu.org/install/)
+    * g++ version >= 7.0
+    * add g++ path to PATH
+- gfortran (https://gcc.gnu.org/wiki/GFortranBinaries)
+    * add gfortran path to PATH
+- python3 (https://www.python.org/downloads/)
+    * create venv and activate
+    ```zsh
+    python3 -m venv venv
+    source venv/bin/activate
+    pip install --upgrade pip
+    pip install torch
+    ```
+- pip install [other dependencies]
+
+## Optional
 - nvidia-cuda-toolkit (nvcc)
 - nvidia-cudnn
-- g++ (https://gcc.gnu.org/install/)
-- gfortran (https://gcc.gnu.org/wiki/GFortranBinaries)
 
+# directory tree
+- dummy_umat_ts (WORKING DI)
+    * dummy umat fortran and cpp code
+- umat_ts (WORKING DI)
+    * umat fortran and cpp code
+- cube_ts (WIP, WITH COMPILE PROBLEM)
+    * cube example to run Abaqus
 
 ## build executable
-go to build directory and run cmake
-
+- go to folder directory (dummy_umat_ts, umat_ts, or cube_ts) and run cmake through CMakeLists.txt
+    * add libtorch path to CMAKE_PREFIX_PATH
+    * add fortran_compiler path to CMAKE_Fortran_COMPILER
+    * make
 ```zsh
 CMAKE_PREFIX_PATH = ~/libtorch
-cmake -DCMAKE_PREFIX_PATH=path/to/libtorch -DCMAKE_Fortran_COMPILER=gfortran ..
-cmake --build . --config Release
+cmake -DCMAKE_PREFIX_PATH=path/to/libtorch -DCMAKE_Fortran_COMPILER=/path/to/fortran_compiler ..
+make
 ```
 
-## run example
-
-```zsh
-./example-app /path/to/traced_model.pt
-```
+- bin file will be generated in bin directory
+- libraries will be generated in lib directory
