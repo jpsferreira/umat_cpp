@@ -7,7 +7,7 @@
 #  define CALL_TS_NO_EXPORT
 #else
 #  ifndef CALL_TS_EXPORT
-#    ifdef dl_model_EXPORTS
+#    ifdef call_ts_cpp_EXPORTS
         /* We are building this library */
 #      define CALL_TS_EXPORT __attribute__((visibility("default")))
 #    else

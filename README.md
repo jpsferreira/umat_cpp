@@ -6,7 +6,7 @@
     * download libtorch and extract to ~/libtorch
     * linux cpu version
         ```zsh
-        wget https://download.pytorch.org/libtorch/cpu/libtorch-shared-with-deps-latest.zip
+        wget https://download.pytorch.org/libtorch/cpu/libtorch-cxx11-abi-shared-with-deps-1.13.1%2Bcpu.zip
         unzip libtorch-shared-with-deps-latest.zip
         mv libtorch ~/libtorch
         ```
@@ -43,10 +43,22 @@
     * add fortran_compiler path to CMAKE_Fortran_COMPILER
     * make
 ```zsh
-CMAKE_PREFIX_PATH = ~/libtorch
+CMAKE_PREFIX_PATH=~/libtorch
 cmake -DCMAKE_PREFIX_PATH=path/to/libtorch -DCMAKE_Fortran_COMPILER=/path/to/fortran_compiler ..
 make
 ```
 
 - bin file will be generated in bin directory
 - libraries will be generated in lib directory
+
+
+## compile umat
+
+```zsh
+cd cube_ts
+g++ -c -fPIC dl_model.cpp -I ~/libtorch/include
+IFORT_COMPILER=/path/to/fortran_compiler
+ifort -c -fPIC -shared umat_an_ai.f90
+LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/libtorch/lib
+ar -cr umat.o umat_an_ai.o dl_model.o ~/libtorch/lib/*
+```

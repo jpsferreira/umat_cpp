@@ -2,6 +2,8 @@
 #include <torch/script.h>
 #include <iostream>
 #include <memory>
+#include <regex>
+
 // c++ function invariant_nn
 //
 // takes inputs, reads a neural network TurbNN.pt, do a forward pass
@@ -11,14 +13,20 @@
 // outputs: 1 tensor basis coefficients G[0:9] (float)
 void dl_model(float I[], float G[])
 {
+    std::cout << "here\n" << std::endl;
     // deserialize scriptmodule from a .pt file
     torch::jit::script::Module module;
-    const char *arg;
-    arg = "traced_example.pt";
-    module = torch::jit::load(arg);
+    std::cout << "here2\n" << std::endl;
+    //const char *arg;
+    std::cout << "here3\n" << std::endl;
+    //arg = "/home/jferreira/umat_cpp/cube_ts/traced_example.pt";
+    //std::cout << "arg:\n" << arg;
+    module = torch::jit::load("/home/jferreira/umat_cpp/cube_ts/traced_example.pt");
+    std::cout << "here4\n" << std::endl;
     //std::cout << "FILE:\n" << arg;
     // create inputs
     std::vector<torch::jit::IValue> inputs;
+    std::cout << "here5\n" << std::endl;
     float data[] = {I[0]};
     inputs.push_back(torch::from_blob(data, {1, 1}));
     //std::cout << "inputs\n" << inputs;
